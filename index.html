@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LYW | الصفحة الرئيسية</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        body {
+            background-color: #000000;
+            color: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden; 
+        }
+
+        /* =========================================
+           شاشة البداية (كلاسيكية وفخمة)
+           ========================================= */
+        #splash-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #000000;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.8s ease-in-out;
+        }
+
+        .splash-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+        }
+
+        .splash-logo {
+            font-size: 85px;
+            font-weight: 900;
+            color: #ff0000;
+            letter-spacing: 12px;
+            text-shadow: 0 0 20px rgba(255, 0, 0, 0.6), 0 0 50px rgba(255, 0, 0, 0.3);
+            margin-bottom: 40px;
+            animation: fadeInLogo 1s ease-out forwards;
+        }
+
+        @keyframes fadeInLogo {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .loader-line {
+            width: 200px; 
+            height: 2px; 
+            background-color: #222222;
+            border-radius: 2px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .loader-line-fill {
+            width: 0%;
+            height: 100%;
+            background-color: #ff0000;
+            box-shadow: 0 0 10px rgba(255, 0, 0, 0.8);
+            transition: width 0.05s linear;
+        }
+
+        .splash-exit {
+            opacity: 0 !important;
+            pointer-events: none;
+        }
+
+        /* =========================================
+           شاشة الترحيب (Welcome Screen)
+           ========================================= */
+        #welcome-screen {
+            display: none; 
+            width: 100%;
+            height: 100vh;
+            padding: 20px;
+            justify-content: center;
+            align-items: center;
+            background-color: #000000;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 9998;
+            transition: opacity 0.6s ease;
+            opacity: 0;
+        }
+
+        .welcome-card {
+            background-color: #0a0a0a;
+            border: 1px solid #ff0000;
+            border-radius: 20px;
+            padding: 50px 30px;
+            text-align: center;
+            width: 100%;
+            max-width: 400px;
+            box-shadow: 0 0 30px rgba(255, 0, 0, 0.3);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .welcome-card h1 {
+            color: #ff0000;
+            font-size: 45px;
+            font-weight: 900;
+            text-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+            margin: 0;
+        }
+
+        .welcome-card p {
+            color: #cccccc;
+            font-size: 16px;
+            line-height: 1.6;
+            margin: 0;
+            text-align: center;
+        }
+
+        .start-btn {
+            background-color: #ff0000;
+            color: #ffffff;
+            border: none;
+            border-radius: 50px;
+            padding: 12px 60px;
+            font-size: 20px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 15px rgba(255, 0, 0, 0.5);
+            margin-top: 10px;
+        }
+
+        .start-btn:hover {
+            background-color: #cc0000;
+            box-shadow: 0 0 25px rgba(255, 0, 0, 0.8);
+            transform: scale(1.05);
+        }
+
+        /* =========================================
+           الصفحة الرئيسية (Main Content)
+           ========================================= */
+        #main-content {
+            display: none; 
+            width: 100%;
+            min-height: 100vh;
+            padding: 20px;
+            justify-content: center;
+            align-items: center;
+            background-color: #000000;
+            overflow-y: auto;
+            opacity: 0;
+            transition: opacity 0.6s ease;
+        }
+
+        .main-card {
+            background-color: #0a0a0a;
+            border-radius: 20px;
+            padding: 40px 20px;
+            width: 100%;
+            max-width: 400px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+
+        /* =========================================
+           الدائرة مع الصورة
+           ========================================= */
+        .logo-circle {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            border: 3px solid #ff0000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden; 
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.6);
+            margin-bottom: 5px;
+            background-color: #000; 
+        }
+
+        .logo-circle img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; 
+            display: block;
+        }
+
+        .main-title {
+            font-size: 55px;
+            font-weight: 900;
+            color: #ffffff;
+            text-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+            margin-bottom: 5px;
+        }
+
+        .subtitle {
+            color: #888888;
+            font-size: 14px;
+            border: 1px solid #333333;
+            border-radius: 50px;
+            padding: 5px 20px;
+            margin-bottom: 10px;
+            background-color: #111111;
+        }
+
+        /* القائمة الصغيرة (ملاحظة البحرين) */
+        .notice-box {
+            width: 100%;
+            background-color: #111111;
+            border: 1px solid #ff0000;
+            border-radius: 12px;
+            padding: 12px 15px;
+            text-align: center;
+            margin-bottom: 15px;
+            box-shadow: 0 0 15px rgba(255, 0, 0, 0.15);
+        }
+
+        .notice-box p {
+            color: #ff4d4d;
+            font-size: 15px;
+            font-weight: 700;
+            margin: 0;
+            letter-spacing: 0.5px;
+        }
+
+        /* أزرار الروابط */
+        .link-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+            padding: 15px;
+            background-color: #111111;
+            border: 1px solid #333333;
+            border-radius: 50px;
+            text-decoration: none;
+            color: #ffffff;
+            font-size: 18px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .link-btn:hover {
+            background-color: #1a1a1a;
+            border-color: #ff0000;
+            box-shadow: 0 0 15px rgba(255, 0, 0, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .icon-svg {
+            width: 24px;
+            height: 24px;
+            fill: #ff0000;
+        }
+
+        .footer-text {
+            color: #555555;
+            font-size: 14px;
+            margin-top: 20px;
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- 1. شاشة البداية (Splash) -->
+    <div id="splash-screen">
+        <div class="splash-content">
+            <div class="splash-logo">LYW</div>
+            <div class="loader-line">
+                <div class="loader-line-fill" id="loaderFill"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. شاشة الترحيب (Welcome) -->
+    <div id="welcome-screen">
+        <div class="welcome-card">
+            <h1>LYW</h1>
+            <p>أهلاً بك! هنا تجد جميع حساباتنا الرسمية.</p>
+            <p>تابعني لتكون على اطلاع دائم.</p>
+            <button class="start-btn" onclick="startApp()">ابدأ</button>
+        </div>
+    </div>
+
+    <!-- 3. الصفحة الرئيسية (Main) -->
+    <div id="main-content">
+        <div class="main-card">
+            
+            <!-- =========================================
+                 ضع هنا رابط الصورة من مستودعك في GitHub
+                 ========================================= -->
+            <div class="logo-circle">
+                <img src="ضع_رابط_الصورة_من_جيت_هاب_هنا.jpg" alt="LYW Logo" id="logoImg">
+            </div>
+
+            <div class="main-title">LYW</div>
+            <div class="subtitle">حساباتي الرسمية • تصنيفاتي</div>
+
+            <!-- القائمة الصغيرة (ملاحظة البحرين) -->
+            <div class="notice-box">
+                <p>يتوفر تجميع فقط للبحرين - التواصل معي</p>
+            </div>
+
+            <!-- رابط الواتساب -->
+            <a href="https://chat.whatsapp.com/EiUZVa4wbxuDsm0YCDzb9Z?s=cl&p=a&mlu=4&ilr=4" target="_blank" class="link-btn">
+                <svg class="icon-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+                </svg>
+                جروب الواتساب تجميع بلياردو
+            </a>
+
+            <!-- رابط قناة الهاكات الأساسية -->
+            <a href="https://t.me/LWY100cmo" target="_blank" class="link-btn">
+                <svg class="icon-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/>
+                </svg>
+                قناة الهاكات الأساسية
+            </a>
+
+            <!-- رابط قناة الهاكات الاحتياطية -->
+            <a href="https://t.me/LLyW10" target="_blank" class="link-btn">
+                <svg class="icon-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/>
+                </svg>
+                قناة الهاكات الاحتياطية
+            </a>
+
+            <!-- رابط حساب الانستغرام -->
+            <a href="https://www.instagram.com/reel/DeXUXhDx_Bi/?srtk=MTlkNzJqOXYycXA4aw==" target="_blank" class="link-btn">
+                <svg class="icon-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
+                </svg>
+                حسابي الانستقرام
+            </a>
+
+            <div class="footer-text">LYW 2026 ©</div>
+        </div>
+    </div>
+
+    <!-- =========================================
+         كود الجافاسكربت
+         ========================================= -->
+    <script>
+        // === نظام التحميل ===
+        const loaderFill = document.getElementById('loaderFill');
+        const splashScreen = document.getElementById('splash-screen');
+        const welcomeScreen = document.getElementById('welcome-screen');
+        
+        // === تحميل الصورة مسبقاً (باستخدام رابط GitHub) ===
+        function preloadImage() {
+            return new Promise((resolve) => {
+                const img = new Image();
+                // ضع هنا نفس الرابط الذي وضعته في وسم img
+                img.src = "ضع_رابط_الصورة_من_جيت_هاب_هنا.jpg"; 
+                img.onload = resolve;
+                img.onerror = resolve; 
+            });
+        }
+
+        function fastLoading() {
+            let progress = 0;
+            
+            const interval = setInterval(() => {
+                progress += 3; 
+                loaderFill.style.width = progress + '%';
+
+                if (progress >= 100) {
+                    clearInterval(interval);
+                    
+                    setTimeout(() => {
+                        splashScreen.classList.add('splash-exit');
+                        
+                        setTimeout(() => {
+                            splashScreen.style.display = 'none';
+                            
+                            welcomeScreen.style.display = 'flex';
+                            setTimeout(() => {
+                                welcomeScreen.style.opacity = '1';
+                            }, 50);
+                            
+                        }, 600); 
+                        
+                    }, 100); 
+                }
+            }, 15); 
+        }
+
+        window.onload = function() {
+            preloadImage().then(() => {
+                setTimeout(fastLoading, 100);
+            });
+        };
+
+        function startApp() {
+            const main = document.getElementById('main-content');
+            
+            welcomeScreen.style.opacity = '0';
+            
+            setTimeout(() => {
+                welcomeScreen.style.display = 'none';
+                main.style.display = 'flex';
+                document.body.style.overflow = 'auto';
+                setTimeout(() => {
+                    main.style.opacity = '1';
+                }, 50);
+            }, 400);
+        }
+    </script>
+</body>
+</html>
