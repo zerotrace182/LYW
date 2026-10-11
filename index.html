@@ -312,11 +312,9 @@
     <div id="main-content">
         <div class="main-card">
             
-            <!-- =========================================
-                 ضع هنا رابط الصورة من مستودعك في GitHub
-                 ========================================= -->
+            <!-- صورة الشعار (الرابط المباشر من GitHub) -->
             <div class="logo-circle">
-                <img src="ضع_رابط_الصورة_من_جيت_هاب_هنا.jpg" alt="LYW Logo" id="logoImg">
+                <img src="https://raw.githubusercontent.com/zerotrace182/LYW/main/file_00000000d07881f5bac52b06a014f412.jpg" alt="LYW Logo" id="logoImg">
             </div>
 
             <div class="main-title">LYW</div>
@@ -376,8 +374,8 @@
         function preloadImage() {
             return new Promise((resolve) => {
                 const img = new Image();
-                // ضع هنا نفس الرابط الذي وضعته في وسم img
-                img.src = "ضع_رابط_الصورة_من_جيت_هاب_هنا.jpg"; 
+                // الرابط المباشر للصورة من GitHub
+                img.src = "https://raw.githubusercontent.com/zerotrace182/LYW/main/file_00000000d07881f5bac52b06a014f412.jpg"; 
                 img.onload = resolve;
                 img.onerror = resolve; 
             });
